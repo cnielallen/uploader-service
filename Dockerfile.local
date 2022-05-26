@@ -1,0 +1,15 @@
+FROM "pathOfJDK"/openjdk:11-jdk
+MAINTAINER TestApplication
+
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} app.jar
+
+ADD local/wait-2.7.3 /wait
+ADD local/id_rsa /opt/openshift/secrets/id_rsa
+ADD local/id_rsa.passphrase /opt/openshift/secrets/id_rsa.passphrase
+
+RUN chmod +x /wait
+
+CMD /wait &&  java -jar /app.jar
+
+EXPOSE 8080
