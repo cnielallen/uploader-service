@@ -1,0 +1,22 @@
+file-configs:
+  default-credentials:
+    username:
+    password:
+  files:
+    - type: "journal"
+      file-name: "journal.csv"
+      file-directory: "/journals"
+      api-url: "https://www.journals.com/upload-journals"
+      http-method: "POST"
+      content-type: "text/csv"
+      file-name-format:
+      username:
+      password:
+    - type: "book"
+      file-name:  "book.pdf"
+      username:
+      password:
+      file-directory: "/books"
+      api-url: "https://www.book.com/upload-books"
+      http-method: "POST"
+      content-type: "application/pdf"

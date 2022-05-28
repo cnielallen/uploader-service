@@ -1,0 +1,58 @@
+server:
+  shutdown: graceful
+spring:
+  application:
+    name: uploader-service
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+    active: ${UPLOADER_SERVICE_ACTIVE_PROFILE:}
+    include: file-configs
+  jmx:
+    enabled: false
+  zipkin:
+    enabled: ${ZIPKIN_ENABLED:false}
+    base-url: ${ZIPKIN_COLLECTOR_URL:}
+    service:
+      name: uploader-service
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
+security:
+  web:
+    paths:
+      secured: "/**"
+      unsecured: "/actuator/**,/swagger/**,/swagger-resources/**,/v3/api-docs/**"
+
+uploader:
+  service:
+    sftp:
+      host: ${UPLOADER_SERVICE_HOST}
+      port: ${UPLOADER_SERVICE_PORT:22}
+      enable-compression: ${UPLOADER_SERVICE_COMPRESSION:true}
+      channel-timeout: ${UPLOADER_SERVICE_CHANNEL_TIMEOUT:3000}
+      directory: ${UPLOADER_SERVICE_DIRECTORY}
+      username: ${UPLOADER_SERVICE_USERNAME}
+      ssh-key: ${UPLOADER_SERVICE_SSH_KEY:${SECRETS_SFTP_PRIVATEKEY/id_rsa}
+      passphrase: ${UPLOADER_SERVICE_PASSPHRASE:${SECRETS_SFTP_PRIVATEKEY/id_rsa.passphrase}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: [ "health", "info", "metrics"]
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+    metrics:
+      enabled: true
+  metrics:
+    export:
+      simple:
+        enabled: true
+        mode: cumulative
+
+
+processor:
+  fixed-delay-ms: ${UPLOADER_SERVICE_FIXED_DELAY_MS:10000}
+  initial-delay-ms: ${UPLOADER_SERVICE_INITIAL_DELAY_MS:10000}
