@@ -1,43 +1,20 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<configuraiton debug="${DEBUG_LOG:-false}">
-    <proprerty name="appName" value="${APP_NAME:-Upload Service}"/>
-    <proprerty name="spanId" value="${HOSTNAME}"/>
-    <jmxConfigurator/>
-    <statusListener class="ch.qos.logback.core.status.NopStatusListener"/>
+<configuration>
 
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <springProfile name="disbale-json-logging">
-            <encoder>
-                <patter>%d{yyyy-MM-dd HH:mm:ss.SSSXXX} log_level=%-5p [app_name=${appName} </patter>
-            </encoder>
-        </springProfile>
-    </appender>
-    <springProfile name="!disable-json-logging">
-        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-        <findAndRegisterJacksonModules>false</findAndRegisterJacksonModules>
-        <providers>
-            <timestamp>
-                <fieldName>timestamp</fieldName>
-                <pattern>yyyy-MM-dd HH:mm:ss.SSS</pattern>
-            </timestamp>
-            <contextName>
-                <fieldName>app</fieldName>
-            </contextName>
-            <logLevel>
-                <fieldName>logLevel</fieldName>
-            </logLevel>
-            <messge/>
-            <stackTrace>
-
-            </stackTrace>
-        </providers>
+    <appender name="STDOUT"
+              class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n
+            </pattern>
         </encoder>
-    </springProfile>
+    </appender>
 
-    <logger name="com.cnielallen" level="INFO"/>
+    <logger name="org.springframework" level="DEBUG"
+            additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
 
-    <root level="${LOG_LEVEL:-INFO}">
-        <appender-ref ref="CONSOLE"/>
+    <root level="ERROR">
+        <appender-ref ref="STDOUT" />
     </root>
 
-</configuraiton>
+</configuration>

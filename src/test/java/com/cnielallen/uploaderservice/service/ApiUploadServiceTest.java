@@ -8,7 +8,7 @@ import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.fileupload.FileUploadException;
+import com.cnielallen.uploaderservice.exception.FilelUploadException;
 import org.junit.After;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -74,7 +74,7 @@ public class ApiUploadServiceTest {
     @Test
     void shouldThrowFileUploadExceptionResponseIfErrorHTTPStatus(){
         stubForReturnErrorHTTPStatus();
-        assertThrows(FileUploadException.class, ()-> apiUploadService.upload(fileUploadDefinition).block());
+        assertThrows(FilelUploadException.class, ()-> apiUploadService.upload(fileUploadDefinition).block());
     }
 
 

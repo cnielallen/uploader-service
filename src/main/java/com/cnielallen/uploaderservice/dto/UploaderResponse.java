@@ -1,17 +1,18 @@
 package com.cnielallen.uploaderservice.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
-@Builder
 @Getter
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @ToString
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UploaderResponse {
-    private final  String fileId;
-    private final  String message;
-    private final boolean success;
+    private   String fileId;
+    private   String message;
+    private  boolean success;
 }
